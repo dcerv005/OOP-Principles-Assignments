@@ -15,12 +15,16 @@ class BudgetCategory:
         return self.__allocated_budget
     
     def set_allocated_budget(self, new_budget):
-        if new_budget > 0:
-            self.__allocated_budget=new_budget
-    
+        try :
+            if new_budget > 0:
+                self.__allocated_budget=new_budget
+            else:
+                raise ValueError("New Budget cannot be a negative number.")
+        except Exception as e:
+            print(f"\nError: {e}\n")
     def add_expenses(self, expense):
         if expense > self.__allocated_budget:
-            print("Expense is too high")
+            raise ValueError("\nExpense is too high\n")
         else:
             self.set_allocated_budget((self.get_allocated_budget()-expense))
 
@@ -31,4 +35,7 @@ class BudgetCategory:
 food_category = BudgetCategory('Food', 500)
 food_category.add_expenses(100)
 food_category.display_category_summary()
+food_category.set_allocated_budget(-10)
+food_category.set_allocated_budget('100')
+food_category.add_expenses(401)
             
